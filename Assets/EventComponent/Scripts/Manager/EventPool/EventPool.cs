@@ -94,7 +94,7 @@ namespace GameFramework
         {
             if (handler == null)
             {
-                throw new GameFrameworkException("Event handler is invalid.");
+                throw new SystemException("Event handler is invalid.");
             }
 
             EventHandler<T> handlers = null;
@@ -128,7 +128,7 @@ namespace GameFramework
         {
             if (handler == null)
             {
-                throw new GameFrameworkException("Event handler is invalid.");
+                throw new SystemException("Event handler is invalid.");
             }
 
             EventHandler<T> eventHandler = null;
@@ -138,11 +138,11 @@ namespace GameFramework
             }
             else if ((m_EventPoolMode & EventPoolMode.AllowMultiHandler) == 0)
             {
-                throw new GameFrameworkException(string.Format("Event '{0}' not allow multi handler.", id.ToString()));
+                throw new SystemException(string.Format("Event '{0}' not allow multi handler.", id.ToString()));
             }
             else if ((m_EventPoolMode & EventPoolMode.AllowDuplicateHandler) == 0 && Check(id, handler))
             {
-                throw new GameFrameworkException(string.Format("Event '{0}' not allow duplicate handler.", id.ToString()));
+                throw new SystemException(string.Format("Event '{0}' not allow duplicate handler.", id.ToString()));
             }
             else
             {
@@ -160,7 +160,7 @@ namespace GameFramework
         {
             if (handler == null)
             {
-                throw new GameFrameworkException("Event handler is invalid.");
+                throw new SystemException("Event handler is invalid.");
             }
 
             if (m_EventHandlers.ContainsKey(id))
@@ -225,10 +225,10 @@ namespace GameFramework
                 handlers(sender, e);
             }
 
-            ReferencePool.Release(e.GetType(), e);
+            //ReferencePool.Release(e.GetType(), e);
             if (handlers == null && (m_EventPoolMode & EventPoolMode.AllowNoHandler) == 0)
             {
-                throw new GameFrameworkException(string.Format("Event '{0}' not allow no handler.", eventId.ToString()));
+                throw new SystemException(string.Format("Event '{0}' not allow no handler.", eventId.ToString()));
             }
         }
     }

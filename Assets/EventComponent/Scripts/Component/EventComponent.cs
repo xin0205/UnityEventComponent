@@ -17,7 +17,7 @@ namespace UnityGameFramework.Runtime
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("Game Framework/Event")]
-    public sealed class EventComponent : GameFrameworkComponent
+    public sealed class EventComponent : MonoBehaviour
     {
         private IEventManager m_EventManager = null;
 
@@ -35,14 +35,15 @@ namespace UnityGameFramework.Runtime
         /// <summary>
         /// 游戏框架组件初始化。
         /// </summary>
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
+            UGF.EventComponent = this;
 
-            m_EventManager = GameFrameworkEntry.GetModule<IEventManager>();
+            m_EventManager = new EventManager();
+
             if (m_EventManager == null)
             {
-                Log.Fatal("Event manager is invalid.");
+                Debug.LogError("Event manager is invalid.");
                 return;
             }
         }
@@ -52,13 +53,19 @@ namespace UnityGameFramework.Runtime
 
         }
 
+
+        private void Update()
+        {
+            m_EventManager.Update(Time.deltaTime, Time.unscaledDeltaTime);
+        }
+
         /// <summary>
         /// 检查订阅事件处理回调函数。
         /// </summary>
         /// <param name="id">事件类型编号。</param>
         /// <param name="handler">要检查的事件处理回调函数。</param>
         /// <returns>是否存在事件处理回调函数。</returns>
-        public bool Check(int id, EventHandler<GameEventArgs> handler)
+        public bool Check(int id, EventHandler<BaseEventArgs> handler)
         {
             return m_EventManager.Check(id, handler);
         }
@@ -68,7 +75,7 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         /// <param name="id">事件类型编号。</param>
         /// <param name="handler">要订阅的事件处理回调函数。</param>
-        public void Subscribe(int id, EventHandler<GameEventArgs> handler)
+        public void Subscribe(int id, EventHandler<BaseEventArgs> handler)
         {
             m_EventManager.Subscribe(id, handler);
         }
@@ -78,7 +85,7 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         /// <param name="id">事件类型编号。</param>
         /// <param name="handler">要取消订阅的事件处理回调函数。</param>
-        public void Unsubscribe(int id, EventHandler<GameEventArgs> handler)
+        public void Unsubscribe(int id, EventHandler<BaseEventArgs> handler)
         {
             m_EventManager.Unsubscribe(id, handler);
         }
@@ -87,7 +94,7 @@ namespace UnityGameFramework.Runtime
         /// 设置默认事件处理函数。
         /// </summary>
         /// <param name="handler">要设置的默认事件处理函数。</param>
-        public void SetDefaultHandler(EventHandler<GameEventArgs> handler)
+        public void SetDefaultHandler(EventHandler<BaseEventArgs> handler)
         {
             m_EventManager.SetDefaultHandler(handler);
         }
@@ -97,7 +104,7 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         /// <param name="sender">事件发送者。</param>
         /// <param name="e">事件内容。</param>
-        public void Fire(object sender, GameEventArgs e)
+        public void Fire(object sender, BaseEventArgs e)
         {
             m_EventManager.Fire(sender, e);
         }
@@ -107,7 +114,7 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         /// <param name="sender">事件发送者。</param>
         /// <param name="e">事件内容。</param>
-        public void FireNow(object sender, GameEventArgs e)
+        public void FireNow(object sender, BaseEventArgs e)
         {
             m_EventManager.FireNow(sender, e);
         }

@@ -5,12 +5,14 @@
 // Feedback: mailto:jiangyin@gameframework.cn
 //------------------------------------------------------------
 
+using System;
+
 namespace GameFramework
 {
     /// <summary>
     /// 事件基类。
     /// </summary>
-    public abstract class BaseEventArgs : GameFrameworkEventArgs, IReference
+    public abstract class BaseEventArgs: EventArgs
     {
         /// <summary>
         /// 获取类型编号。
