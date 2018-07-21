@@ -17,7 +17,7 @@ public class ButtonClick : MonoBehaviour {
 	}
 
     public void Click() {
-        UGF.EventComponent.Fire(this, new ClickEventArgs() { ClickArgs = "click me" });
+        UGFEvent.Component.Fire(this, new ClickEventArgs() { ClickArgs = "click me" });
 
     }
 

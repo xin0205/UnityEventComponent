@@ -37,7 +37,7 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         private void Awake()
         {
-            UGF.EventComponent = this;
+            UGFEvent.Component = this;
 
             m_EventManager = new EventManager();
 

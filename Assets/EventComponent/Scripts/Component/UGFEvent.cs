@@ -4,19 +4,19 @@ using UnityEngine;
 using UnityGameFramework.Runtime;
 
 namespace UnityGameFramework {
-    public static class UGF {
-        private static EventComponent eventComponent;
+    public static class UGFEvent {
+        private static EventComponent component;
 
-        public static EventComponent EventComponent
+        public static EventComponent Component
         {
             get
             {
-                return eventComponent;
+                return component;
             }
 
             set
             {
-                eventComponent = value;
+                component = value;
             }
         }
     }

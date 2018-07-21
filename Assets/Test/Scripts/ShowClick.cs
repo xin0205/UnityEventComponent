@@ -8,7 +8,7 @@ public class ShowClick : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        UGF.EventComponent.Subscribe(ClickEventArgs.EventId, OnClickCallback);
+       UGFEvent.Component.Subscribe(ClickEventArgs.EventId, OnClickCallback);
     }
 	
 	// Update is called once per frame
